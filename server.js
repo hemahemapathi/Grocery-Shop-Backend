@@ -27,7 +27,7 @@ dotenv.config();
 set('strictQuery', false);
 
 //Connect to MongoDB
-connect(process.env.MONGODB_URI || 'mongodb+srv://hema:pathi@shop.lzjuz.mongodb.net/')
+connect(process.env.MONGODB_URI')
 .then(() => console.log('MongoDB connected successfully'))
 .catch(err => {
     console.error('MongoDB connection error:', err);
@@ -71,9 +71,16 @@ app.use("/api/category", categoryRoute);
 //Access Front End Static Files
 app.use(expressStatic(join(__dirname, "../frontend/build")));
 
-//Access Front End All URL
-app.get("/*", (req, res) => {
-  res.sendFile(join(__dirname, "../frontend/build/index.html"));
+app.get("/", (req, res) => {
+  res.send("Hello From Serverside!!");
+});
+
+app.get("/test", (req, res) => {
+  res.status(200).send('OK')
+});
+
+app.get("/health", (req, res) => {
+  res.send("Hello From Serverside!!");
 });
 
 app.use((err, req, res, next) => {
